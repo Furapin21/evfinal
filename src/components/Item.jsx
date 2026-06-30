@@ -1,11 +1,23 @@
-import React from 'react';
-
 function Item({ item, deleteItem, editItem }) {
   return (
-    <li>
-      {item.value}
-      <button onClick={() => editItem(item)}>Editar</button>
-      <button onClick={() => deleteItem(item.id)}>Eliminar</button>
+    <li className="item">
+      <span className="item__text">{item.value}</span>
+      <div className="item__actions">
+        <button
+          type="button"
+          className="btn btn--edit"
+          onClick={() => editItem(item)}
+        >
+          Editar
+        </button>
+        <button
+          type="button"
+          className="btn btn--delete"
+          onClick={() => deleteItem(item.id)}
+        >
+          Eliminar
+        </button>
+      </div>
     </li>
   );
 }

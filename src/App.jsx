@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Form from './components/Form';
 import List from './components/List';
 import './App.css';
 
 function App() {
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem('items')) || [];
+    } catch {
+      return [];
+    }
+  });
   const [itemToEdit, setItemToEdit] = useState(null);
-
-  useEffect(() => {
-    const storedItems =
-      JSON.parse(localStorage.getItem('items')) || [];
-    setItems(storedItems);
-  }, []);
 
   useEffect(() => {
     localStorage.setItem('items', JSON.stringify(items));
@@ -36,13 +36,20 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <h1>CRUD con LocalStorage</h1>
-      <Form
-        addOrUpdateItem={addOrUpdateItem}
-        itemToEdit={itemToEdit} />
-      <List items={items}
-        deleteItem={deleteItem} editItem={editItem} />
+    <div className="App app-shell">
+      <div className="app-card">
+        <h1 className="app-title">ev final</h1>
+        <Form
+          key={itemToEdit?.id ?? 'new' }
+          addOrUpdateItem={addOrUpdateItem}
+          itemToEdit={itemToEdit}
+        />
+        <List
+          items={items}
+          deleteItem={deleteItem}
+          editItem={editItem}
+        />
+      </div>
     </div>
   );
 }

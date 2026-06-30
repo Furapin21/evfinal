@@ -1,15 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 function Form({ addOrUpdateItem, itemToEdit }) {
-  const [inputValue, setInputValue] = useState("");
-
-  useEffect(() => {
-    if (itemToEdit) {
-      setInputValue(itemToEdit.value);
-    } else {
-      setInputValue("");
-    }
-  }, [itemToEdit]);
+  const [inputValue, setInputValue] = useState(
+    itemToEdit?.value ?? ''
+  );
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -20,17 +14,19 @@ function Form({ addOrUpdateItem, itemToEdit }) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className="form" onSubmit={handleSubmit}>
       <input
+        className="form__input"
         type="text"
+        placeholder="Escribe un elemento..."
         value={inputValue}
-        onChange={(e) =>
-          setInputValue(e.target.value)}
-     />
-      <button type="submit">{itemToEdit ?
-        'Actualizar' : 'Agregar'}</button>
-     </form>
-      );
+        onChange={(e) => setInputValue(e.target.value)}
+      />
+      <button className="form__button" type="submit">
+        {itemToEdit ? 'Actualizar' : 'Agregar'}
+      </button>
+    </form>
+  );
 }
 
 export default Form;
